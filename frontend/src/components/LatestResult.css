@@ -1,0 +1,91 @@
+.latest-result {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.latest-result h2 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.date-section, .numbers-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-label, .numbers-label {
+  font-size: 16px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.date-value {
+  font-size: 18px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.numbers-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.number-ball {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.number-ball:hover {
+  transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+  .result-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .date-section, .numbers-section {
+    flex-direction: row;
+    gap: 12px;
+  }
+  
+  .date-section {
+    flex: 1;
+  }
+  
+  .numbers-section {
+    flex: 2;
+    justify-content: flex-end;
+  }
+}

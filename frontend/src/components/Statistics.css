@@ -1,0 +1,140 @@
+.statistics {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.statistics h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.statistics h3 {
+  margin: 20px 0 16px 0;
+  color: #555;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.stats-summary {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+  min-width: 120px;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.chart-container {
+  margin: 24px 0;
+  padding: 16px;
+  background: #fafbfc;
+  border-radius: 8px;
+}
+
+.stats-table {
+  margin-top: 24px;
+}
+
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+}
+
+.stats-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.stats-table th {
+  background: #f8f9fa;
+  padding: 12px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e1e5e9;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.stats-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.stats-table tr:hover {
+  background: #f8f9fa;
+}
+
+.stats-table .top-five {
+  background: #fff3cd;
+}
+
+.stats-table .top-five:hover {
+  background: #ffeaa7;
+}
+
+.number-cell {
+  font-weight: bold;
+  color: #667eea;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .statistics {
+    padding: 16px;
+  }
+  
+  .stats-summary {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .summary-item {
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: auto;
+  }
+  
+  .chart-container {
+    padding: 8px;
+  }
+  
+  .stats-table {
+    font-size: 12px;
+  }
+  
+  .stats-table th,
+  .stats-table td {
+    padding: 8px 4px;
+  }
+}
