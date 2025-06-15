@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>測試頁面</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>GitHub Pages 測試</h1>
+    <p>如果你能看到這個頁面，表示GitHub Pages部署成功。</p>
+    <p>時間：<script>document.write(new Date().toLocaleString('zh-TW'));</script></p>
+    
+    <h2>測試資料載入</h2>
+    <button onclick="testDataLoad()">測試載入lottery_data.json</button>
+    <div id="result"></div>
+    
+    <script>
+    async function testDataLoad() {
+        const resultDiv = document.getElementById('result');
+        try {
+            resultDiv.innerHTML = '載入中...';
+            const response = await fetch('./lottery_data.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            resultDiv.innerHTML = `
+                <p>✅ 資料載入成功！</p>
+                <p>總記錄數: ${data.total_records}</p>
+                <p>最後更新: ${data.last_updated}</p>
+                <p>最新開獎: ${data.data[0]?.date} - ${data.data[0]?.numbers?.join(', ')}</p>
+            `;
+        } catch (error) {
+            resultDiv.innerHTML = `❌ 載入失敗: ${error.message}`;
+        }
+    }
+    </script>
+</body>
+</html>
