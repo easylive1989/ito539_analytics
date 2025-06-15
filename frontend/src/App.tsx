@@ -8,6 +8,9 @@ function App() {
   const { data, loading, error } = useLotteryData();
   const [selectedPeriod, setSelectedPeriod] = useState<number>(30);
 
+  // Debug information
+  console.log('App render:', { data: !!data, loading, error });
+
   if (loading) {
     return (
       <div className="App">
@@ -24,7 +27,9 @@ function App() {
       <div className="App">
         <div className="error">
           <h2>載入失敗</h2>
-          <p>{error}</p>
+          <p>錯誤訊息: {error}</p>
+          <p>請確認資料檔案是否存在: ./lottery_data.json</p>
+          <p>當前URL: {window.location.href}</p>
         </div>
       </div>
     );
