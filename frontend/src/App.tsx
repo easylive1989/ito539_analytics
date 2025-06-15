@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import './App.css';
 import { useLotteryData } from './hooks/useLotteryData';
+import { StatisticsFilter as StatisticsFilterType } from './types';
 import LatestResult from './components/LatestResult';
 import Statistics from './components/Statistics';
+import StatisticsFilterComponent from './components/StatisticsFilter';
 
 function App() {
   const { data, loading, error } = useLotteryData();
-  const [selectedPeriod, setSelectedPeriod] = useState<number>(30);
+  const [statisticsFilter, setStatisticsFilter] = useState<StatisticsFilterType>({
+    type: 'period',
+    value: 30
+  });
 
   // Debug information
   console.log('App render:', { data: !!data, loading, error });
@@ -59,22 +64,13 @@ function App() {
       <main className="App-main">
         <LatestResult record={latestRecord} />
         
-        <div className="period-selector">
-          <label htmlFor="period">統計期數：</label>
-          <select 
-            id="period"
-            value={selectedPeriod} 
-            onChange={(e) => setSelectedPeriod(Number(e.target.value))}
-          >
-            <option value={10}>近10期</option>
-            <option value={20}>近20期</option>
-            <option value={30}>近30期</option>
-            <option value={50}>近50期</option>
-            <option value={100}>近100期</option>
-          </select>
-        </div>
+        <StatisticsFilterComponent 
+          records={data.data}
+          onFilterChange={setStatisticsFilter}
+          initialFilter={statisticsFilter}
+        />
         
-        <Statistics records={data.data} period={selectedPeriod} />
+        <Statistics records={data.data} filter={statisticsFilter} />
       </main>
       
       <footer className="App-footer">

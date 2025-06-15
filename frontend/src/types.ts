@@ -15,3 +15,13 @@ export interface NumberStats {
   count: number;
   percentage: number;
 }
+
+export interface DateRange {
+  startDate: string | null;
+  endDate: string | null;
+}
+
+export interface StatisticsFilter {
+  type: 'period' | 'dateRange' | 'all';
+  value: number | DateRange | null;
+}

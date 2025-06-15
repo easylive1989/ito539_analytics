@@ -1,17 +1,53 @@
 import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { LotteryRecord, NumberStats } from '../types';
+import { LotteryRecord, NumberStats, StatisticsFilter } from '../types';
 import './Statistics.css';
 
 interface StatisticsProps {
   records: LotteryRecord[];
-  period: number;
+  filter: StatisticsFilter;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({ records, period }) => {
+const Statistics: React.FC<StatisticsProps> = ({ records, filter }) => {
+  const { filteredRecords, statsTitle } = useMemo(() => {
+    let filtered: LotteryRecord[] = [];
+    let title = '';
+
+    switch (filter.type) {
+      case 'period':
+        const period = filter.value as number;
+        filtered = records.slice(0, period);
+        title = `近${period}期號碼統計`;
+        break;
+        
+      case 'dateRange':
+        const dateRange = filter.value as { startDate: string | null; endDate: string | null };
+        if (dateRange.startDate && dateRange.endDate) {
+          filtered = records.filter(record => {
+            const recordDate = new Date(record.timestamp);
+            const start = new Date(dateRange.startDate!);
+            const end = new Date(dateRange.endDate!);
+            return recordDate >= start && recordDate <= end;
+          });
+          title = `${dateRange.startDate} 至 ${dateRange.endDate} 號碼統計`;
+        }
+        break;
+        
+      case 'all':
+        filtered = records;
+        title = '全期號碼統計';
+        break;
+        
+      default:
+        filtered = records.slice(0, 30);
+        title = '近30期號碼統計';
+    }
+
+    return { filteredRecords: filtered, statsTitle: title };
+  }, [records, filter]);
+
   const stats = useMemo(() => {
-    // 取最近的期數
-    const recentRecords = records.slice(0, period);
+    const recentRecords = filteredRecords;
     
     // 統計每個號碼出現次數
     const numberCounts: { [key: number]: number } = {};
@@ -38,18 +74,18 @@ const Statistics: React.FC<StatisticsProps> = ({ records, period }) => {
       .sort((a, b) => b.count - a.count);
     
     return statsArray;
-  }, [records, period]);
+  }, [filteredRecords]);
 
   const chartData = stats.slice(0, 20); // 顯示前20名
 
   return (
     <div className="statistics">
-      <h2>近{period}期號碼統計</h2>
+      <h2>{statsTitle}</h2>
       
       <div className="stats-summary">
         <div className="summary-item">
           <span className="summary-label">統計期數</span>
-          <span className="summary-value">{Math.min(period, records.length)}</span>
+          <span className="summary-value">{filteredRecords.length}</span>
         </div>
         <div className="summary-item">
           <span className="summary-label">最熱門號碼</span>
