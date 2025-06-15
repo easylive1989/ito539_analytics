@@ -10,7 +10,8 @@ export const useLotteryData = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/lottery_data.json');
+        // Use relative path that works both locally and on GitHub Pages
+        const response = await fetch('./lottery_data.json');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
