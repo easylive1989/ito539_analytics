@@ -68,7 +68,64 @@
   transform: scale(1.1);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+  .latest-result {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .latest-result h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .result-container {
+    gap: 12px;
+  }
+  
+  .date-label, .numbers-label {
+    font-size: 14px;
+  }
+  
+  .date-value {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+  
+  .numbers-container {
+    gap: 8px;
+  }
+  
+  .number-ball {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .latest-result {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .latest-result h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .numbers-container {
+    gap: 6px;
+  }
+  
+  .number-ball {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) {
   .result-container {
     flex-direction: row;
     justify-content: space-between;

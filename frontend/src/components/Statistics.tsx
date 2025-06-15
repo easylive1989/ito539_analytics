@@ -76,7 +76,7 @@ const Statistics: React.FC<StatisticsProps> = ({ records, filter }) => {
     return statsArray;
   }, [filteredRecords]);
 
-  const chartData = stats.slice(0, 20); // 顯示前20名
+  const chartData = stats.slice(0, 10); // 顯示前10名
 
   return (
     <div className="statistics">
@@ -98,7 +98,7 @@ const Statistics: React.FC<StatisticsProps> = ({ records, filter }) => {
       </div>
 
       <div className="chart-container">
-        <h3>熱門號碼排行 (前20名)</h3>
+        <h3>熱門號碼排行 (前10名)</h3>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />

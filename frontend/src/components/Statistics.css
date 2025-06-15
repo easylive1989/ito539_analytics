@@ -111,30 +111,115 @@
 
 @media (max-width: 768px) {
   .statistics {
-    padding: 16px;
+    padding: 12px;
+  }
+  
+  .statistics h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  .statistics h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    text-align: center;
   }
   
   .stats-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .summary-item {
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    text-align: center;
+    padding: 12px 8px;
+    min-width: auto;
+  }
+  
+  .summary-label {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  
+  .summary-value {
+    font-size: 16px;
+  }
+  
+  .chart-container {
+    padding: 8px;
+    margin: 16px 0;
+  }
+  
+  .chart-container .recharts-wrapper {
+    font-size: 11px;
+  }
+  
+  .stats-table {
+    font-size: 12px;
+    margin-top: 16px;
+  }
+  
+  .stats-table th,
+  .stats-table td {
+    padding: 6px 4px;
+  }
+  
+  .stats-table th {
+    font-size: 11px;
+  }
+  
+  .table-container {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statistics {
+    padding: 8px;
+  }
+  
+  .statistics h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .statistics h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  
+  .stats-summary {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
   }
   
   .summary-item {
     flex-direction: row;
     justify-content: space-between;
-    min-width: auto;
+    text-align: left;
+    padding: 8px 12px;
   }
   
-  .chart-container {
-    padding: 8px;
-  }
-  
-  .stats-table {
+  .summary-label {
     font-size: 12px;
   }
   
-  .stats-table th,
-  .stats-table td {
-    padding: 8px 4px;
+  .summary-value {
+    font-size: 14px;
+  }
+  
+  .chart-container {
+    padding: 4px;
+    margin: 12px 0;
+  }
+  
+  .table-container {
+    max-height: 250px;
   }
 }
