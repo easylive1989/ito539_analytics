@@ -30,11 +30,15 @@ jobs:
       run: |
         python scraper.py
     
+    - name: Copy data to frontend
+      run: |
+        cp lottery_data.json frontend/public/lottery_data.json
+    
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add lottery_data.json
+        git add lottery_data.json frontend/public/lottery_data.json
         git diff --staged --quiet || git commit -m "Update lottery data - $(date +'%Y-%m-%d %H:%M:%S')"
         git push
       env:
