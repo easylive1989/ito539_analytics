@@ -10,8 +10,10 @@ export const useLotteryData = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Use relative path that works both locally and on GitHub Pages
-        const response = await fetch('./lottery_data.json');
+        // Use different paths for development and production
+        const isDev = process.env.NODE_ENV === 'development';
+        const dataUrl = isDev ? '/ito539_analytics/lottery_data.json' : './lottery_data.json';
+        const response = await fetch(dataUrl);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
