@@ -22,6 +22,6 @@ export interface DateRange {
 }
 
 export interface StatisticsFilter {
-  type: 'period' | 'dateRange' | 'all';
-  value: number | DateRange | null;
+  type: 'period' | 'dateRange' | 'all' | 'selectedDate';
+  value: number | DateRange | null | { selectedDate: string; records: LotteryRecord[] };
 }

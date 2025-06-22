@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { LotteryRecord, StatisticsFilter, DateRange } from '../types';
-import './StatisticsFilter.css';
 
 interface StatisticsFilterProps {
   records: LotteryRecord[];
@@ -13,7 +12,9 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
   onFilterChange,
   initialFilter
 }) => {
-  const [filterType, setFilterType] = useState<'period' | 'dateRange' | 'all'>(initialFilter.type);
+  const [filterType, setFilterType] = useState<'period' | 'dateRange' | 'all'>(
+    initialFilter.type === 'selectedDate' ? 'period' : initialFilter.type
+  );
   const [selectedPeriod, setSelectedPeriod] = useState<number>(30);
   const [dateRange, setDateRange] = useState<DateRange>({
     startDate: null,
@@ -93,28 +94,142 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
     }
   };
 
+  const styles = {
+    container: {
+      background: 'white',
+      borderRadius: '12px',
+      padding: '24px',
+      marginBottom: '24px',
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+    },
+    title: {
+      margin: '0 0 20px 0',
+      color: '#333',
+      fontSize: '18px',
+      fontWeight: '600',
+    },
+    filterOptions: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      gap: '20px',
+      marginBottom: '24px',
+    },
+    filterOption: {
+      border: '2px solid #e1e5e9',
+      borderRadius: '8px',
+      padding: '16px',
+      transition: 'border-color 0.2s ease',
+    },
+    filterOptionActive: {
+      borderColor: '#667eea',
+      background: '#f8f9ff',
+    },
+    label: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      fontWeight: '500',
+      color: '#333',
+      cursor: 'pointer',
+      marginBottom: '12px',
+    },
+    radioInput: {
+      width: '18px',
+      height: '18px',
+      cursor: 'pointer',
+    },
+    controls: {
+      marginLeft: '26px',
+      marginTop: '12px',
+    },
+    select: {
+      padding: '8px 12px',
+      border: '2px solid #e1e5e9',
+      borderRadius: '6px',
+      background: 'white',
+      fontSize: '14px',
+      cursor: 'pointer',
+    },
+    dateControls: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      gap: '12px',
+    },
+    dateInputGroup: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+    },
+    dateInput: {
+      padding: '8px 12px',
+      border: '2px solid #e1e5e9',
+      borderRadius: '6px',
+      fontSize: '14px',
+    },
+    quickButtons: {
+      display: 'flex',
+      gap: '8px',
+      flexWrap: 'wrap' as const,
+      marginTop: '8px',
+    },
+    quickButton: {
+      padding: '6px 12px',
+      border: '1px solid #667eea',
+      background: 'white',
+      color: '#667eea',
+      borderRadius: '4px',
+      fontSize: '12px',
+      cursor: 'pointer',
+    },
+    summary: {
+      padding: '16px',
+      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+      borderRadius: '8px',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      gap: '8px',
+    },
+    summaryInfo: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    summaryLabel: {
+      fontSize: '14px',
+      color: '#666',
+      fontWeight: '500',
+    },
+    summaryValue: {
+      fontSize: '14px',
+      color: '#333',
+      fontWeight: '600',
+    },
+  };
+
   return (
-    <div className="statistics-filter">
-      <h3>統計範圍設定</h3>
+    <div style={styles.container}>
+      <h3 style={styles.title}>統計範圍設定</h3>
       
-      <div className="filter-options">
-        <div className="filter-option">
-          <label>
+      <div style={styles.filterOptions}>
+        <div style={{...styles.filterOption, ...(filterType === 'period' ? styles.filterOptionActive : {})}}>
+          <label style={styles.label}>
             <input
               type="radio"
               name="filterType"
               value="period"
               checked={filterType === 'period'}
               onChange={() => handleFilterTypeChange('period')}
+              style={styles.radioInput}
             />
             <span>按期數</span>
           </label>
           
           {filterType === 'period' && (
-            <div className="period-controls">
+            <div style={styles.controls}>
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(Number(e.target.value))}
+                style={styles.select}
               >
                 <option value={5}>近5期</option>
                 <option value={10}>近10期</option>
@@ -128,21 +243,22 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
           )}
         </div>
 
-        <div className="filter-option">
-          <label>
+        <div style={{...styles.filterOption, ...(filterType === 'dateRange' ? styles.filterOptionActive : {})}}>
+          <label style={styles.label}>
             <input
               type="radio"
               name="filterType"
               value="dateRange"
               checked={filterType === 'dateRange'}
               onChange={() => handleFilterTypeChange('dateRange')}
+              style={styles.radioInput}
             />
             <span>按日期範圍</span>
           </label>
           
           {filterType === 'dateRange' && (
-            <div className="date-controls">
-              <div className="date-input-group">
+            <div style={{...styles.controls, ...styles.dateControls}}>
+              <div style={styles.dateInputGroup}>
                 <label htmlFor="startDate">開始日期：</label>
                 <input
                   id="startDate"
@@ -151,10 +267,11 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
                   max={formatDateForInput(maxDate)}
                   value={dateRange.startDate ? formatDateForInput(dateRange.startDate) : ''}
                   onChange={(e) => handleStartDateChange(e.target.value)}
+                  style={styles.dateInput}
                 />
               </div>
               
-              <div className="date-input-group">
+              <div style={styles.dateInputGroup}>
                 <label htmlFor="endDate">結束日期：</label>
                 <input
                   id="endDate"
@@ -163,10 +280,11 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
                   max={formatDateForInput(maxDate)}
                   value={dateRange.endDate ? formatDateForInput(dateRange.endDate) : ''}
                   onChange={(e) => handleEndDateChange(e.target.value)}
+                  style={styles.dateInput}
                 />
               </div>
               
-              <div className="quick-date-buttons">
+              <div style={styles.quickButtons}>
                 <button
                   type="button"
                   onClick={() => {
@@ -175,6 +293,7 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
                     const startDate = startRecord ? startRecord.date : records[records.length - 1].date;
                     setDateRange({ startDate, endDate });
                   }}
+                  style={styles.quickButton}
                 >
                   近30期
                 </button>
@@ -189,6 +308,7 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
                     const startDate = startRecord ? startRecord.date : records[records.length - 1].date;
                     setDateRange({ startDate, endDate });
                   }}
+                  style={styles.quickButton}
                 >
                   近30天
                 </button>
@@ -203,6 +323,7 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
                     const startDate = startRecord ? startRecord.date : records[records.length - 1].date;
                     setDateRange({ startDate, endDate });
                   }}
+                  style={styles.quickButton}
                 >
                   近7天
                 </button>
@@ -211,24 +332,25 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
           )}
         </div>
 
-        <div className="filter-option">
-          <label>
+        <div style={{...styles.filterOption, ...(filterType === 'all' ? styles.filterOptionActive : {})}}>
+          <label style={styles.label}>
             <input
               type="radio"
               name="filterType"
               value="all"
               checked={filterType === 'all'}
               onChange={() => handleFilterTypeChange('all')}
+              style={styles.radioInput}
             />
             <span>全部資料</span>
           </label>
         </div>
       </div>
 
-      <div className="filter-summary">
-        <div className="summary-info">
-          <span className="summary-label">統計範圍：</span>
-          <span className="summary-value">
+      <div style={styles.summary}>
+        <div style={styles.summaryInfo}>
+          <span style={styles.summaryLabel}>統計範圍：</span>
+          <span style={styles.summaryValue}>
             {filterType === 'period' && `近${selectedPeriod}期`}
             {filterType === 'dateRange' && dateRange.startDate && dateRange.endDate && 
               `${dateRange.startDate} 至 ${dateRange.endDate}`}
@@ -238,14 +360,14 @@ const StatisticsFilterComponent: React.FC<StatisticsFilterProps> = ({
           </span>
         </div>
         
-        <div className="summary-info">
-          <span className="summary-label">包含期數：</span>
-          <span className="summary-value">{getFilteredRecordsCount()} 期</span>
+        <div style={styles.summaryInfo}>
+          <span style={styles.summaryLabel}>包含期數：</span>
+          <span style={styles.summaryValue}>{getFilteredRecordsCount()} 期</span>
         </div>
         
-        <div className="summary-info">
-          <span className="summary-label">資料範圍：</span>
-          <span className="summary-value">{minDate} 至 {maxDate}</span>
+        <div style={styles.summaryInfo}>
+          <span style={styles.summaryLabel}>資料範圍：</span>
+          <span style={styles.summaryValue}>{minDate} 至 {maxDate}</span>
         </div>
       </div>
     </div>

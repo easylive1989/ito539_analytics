@@ -6,9 +6,10 @@ import './Statistics.css';
 interface StatisticsProps {
   records: LotteryRecord[];
   filter: StatisticsFilter;
+  selectedRecord?: LotteryRecord | null;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({ records, filter }) => {
+const Statistics: React.FC<StatisticsProps> = ({ records, filter, selectedRecord }) => {
   const { filteredRecords, statsTitle } = useMemo(() => {
     let filtered: LotteryRecord[] = [];
     let title = '';
@@ -36,6 +37,12 @@ const Statistics: React.FC<StatisticsProps> = ({ records, filter }) => {
       case 'all':
         filtered = records;
         title = '全期號碼統計';
+        break;
+        
+      case 'selectedDate':
+        const selectedDateData = filter.value as { selectedDate: string; records: LotteryRecord[] };
+        filtered = selectedDateData.records;
+        title = `以 ${selectedDateData.selectedDate} 為基準，過去30期號碼統計`;
         break;
         
       default:

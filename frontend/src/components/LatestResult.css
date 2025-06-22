@@ -14,6 +14,43 @@
   font-weight: 600;
 }
 
+.date-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.date-selector label {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.date-select {
+  padding: 8px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.date-select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.date-select option {
+  background: #333;
+  color: white;
+}
+
 .result-container {
   display: flex;
   flex-direction: column;
@@ -77,6 +114,23 @@
   .latest-result h2 {
     font-size: 18px;
     margin-bottom: 16px;
+  }
+  
+  .date-selector {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .date-selector label {
+    font-size: 14px;
+  }
+  
+  .date-select {
+    padding: 10px 12px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 280px;
   }
   
   .result-container {

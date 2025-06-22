@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
 import { useLotteryData } from './hooks/useLotteryData';
-import { StatisticsFilter as StatisticsFilterType } from './types';
+import { StatisticsFilter as StatisticsFilterType, LotteryRecord } from './types';
 import LatestResult from './components/LatestResult';
 import Statistics from './components/Statistics';
-import StatisticsFilterComponent from './components/StatisticsFilter';
 
 function App() {
   const { data, loading, error } = useLotteryData();
@@ -12,6 +11,7 @@ function App() {
     type: 'period',
     value: 30
   });
+  const [selectedRecord, setSelectedRecord] = useState<LotteryRecord | null>(null);
 
   // Debug information
   console.log('App render:', { data: !!data, loading, error });
@@ -51,8 +51,23 @@ function App() {
     );
   }
 
-  const latestRecord = data.data[0];
   const lastUpdated = new Date(data.last_updated).toLocaleString('zh-TW');
+
+  const handleDateChange = (record: LotteryRecord) => {
+    setSelectedRecord(record);
+    // 更新統計過濾器以選擇日期為基準統計過去30期
+    const recordIndex = data.data.findIndex(r => r.date === record.date);
+    const endIndex = Math.min(recordIndex + 30, data.data.length);
+    const filteredRecords = data.data.slice(recordIndex, endIndex);
+    
+    setStatisticsFilter({
+      type: 'selectedDate',
+      value: {
+        selectedDate: record.date,
+        records: filteredRecords
+      }
+    });
+  };
 
   return (
     <div className="App">
@@ -62,15 +77,16 @@ function App() {
       </header>
       
       <main className="App-main">
-        <LatestResult record={latestRecord} />
-        
-        <StatisticsFilterComponent 
-          records={data.data}
-          onFilterChange={setStatisticsFilter}
-          initialFilter={statisticsFilter}
+        <LatestResult 
+          records={data.data} 
+          onDateChange={handleDateChange}
         />
         
-        <Statistics records={data.data} filter={statisticsFilter} />
+        <Statistics 
+          records={data.data} 
+          filter={statisticsFilter}
+          selectedRecord={selectedRecord}
+        />
       </main>
       
       <footer className="App-footer">
