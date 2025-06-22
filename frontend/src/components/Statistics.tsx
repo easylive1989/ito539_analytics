@@ -1,57 +1,19 @@
 import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { LotteryRecord, NumberStats, StatisticsFilter } from '../types';
+import { LotteryRecord, NumberStats } from '../types';
 import './Statistics.css';
 
 interface StatisticsProps {
   records: LotteryRecord[];
-  filter: StatisticsFilter;
-  selectedRecord?: LotteryRecord | null;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({ records, filter, selectedRecord }) => {
+const Statistics: React.FC<StatisticsProps> = ({ records }) => {
   const { filteredRecords, statsTitle } = useMemo(() => {
-    let filtered: LotteryRecord[] = [];
-    let title = '';
-
-    switch (filter.type) {
-      case 'period':
-        const period = filter.value as number;
-        filtered = records.slice(0, period);
-        title = `近${period}期號碼統計`;
-        break;
-        
-      case 'dateRange':
-        const dateRange = filter.value as { startDate: string | null; endDate: string | null };
-        if (dateRange.startDate && dateRange.endDate) {
-          filtered = records.filter(record => {
-            const recordDate = new Date(record.timestamp);
-            const start = new Date(dateRange.startDate!);
-            const end = new Date(dateRange.endDate!);
-            return recordDate >= start && recordDate <= end;
-          });
-          title = `${dateRange.startDate} 至 ${dateRange.endDate} 號碼統計`;
-        }
-        break;
-        
-      case 'all':
-        filtered = records;
-        title = '全期號碼統計';
-        break;
-        
-      case 'selectedDate':
-        const selectedDateData = filter.value as { selectedDate: string; records: LotteryRecord[] };
-        filtered = selectedDateData.records;
-        title = `以 ${selectedDateData.selectedDate} 為基準，過去30期號碼統計`;
-        break;
-        
-      default:
-        filtered = records.slice(0, 30);
-        title = '近30期號碼統計';
-    }
-
+    const filtered = records.slice(0, 30);
+    const title = '近30期號碼統計';
+    
     return { filteredRecords: filtered, statsTitle: title };
-  }, [records, filter]);
+  }, [records]);
 
   const stats = useMemo(() => {
     const recentRecords = filteredRecords;

@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { useLotteryData } from './hooks/useLotteryData';
-import { StatisticsFilter as StatisticsFilterType, LotteryRecord } from './types';
 import LatestResult from './components/LatestResult';
 import Statistics from './components/Statistics';
 
 function App() {
   const { data, loading, error } = useLotteryData();
-  const [statisticsFilter, setStatisticsFilter] = useState<StatisticsFilterType>({
-    type: 'period',
-    value: 30
-  });
-  const [selectedRecord, setSelectedRecord] = useState<LotteryRecord | null>(null);
 
   // Debug information
   console.log('App render:', { data: !!data, loading, error });
@@ -53,22 +47,6 @@ function App() {
 
   const lastUpdated = new Date(data.last_updated).toLocaleString('zh-TW');
 
-  const handleDateChange = (record: LotteryRecord) => {
-    setSelectedRecord(record);
-    // 更新統計過濾器以選擇日期為基準統計過去30期
-    const recordIndex = data.data.findIndex(r => r.date === record.date);
-    const endIndex = Math.min(recordIndex + 30, data.data.length);
-    const filteredRecords = data.data.slice(recordIndex, endIndex);
-    
-    setStatisticsFilter({
-      type: 'selectedDate',
-      value: {
-        selectedDate: record.date,
-        records: filteredRecords
-      }
-    });
-  };
-
   return (
     <div className="App">
       <header className="App-header">
@@ -79,13 +57,10 @@ function App() {
       <main className="App-main">
         <LatestResult 
           records={data.data} 
-          onDateChange={handleDateChange}
         />
         
         <Statistics 
           records={data.data} 
-          filter={statisticsFilter}
-          selectedRecord={selectedRecord}
         />
       </main>
       

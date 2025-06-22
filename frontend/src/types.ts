@@ -16,12 +16,3 @@ export interface NumberStats {
   percentage: number;
 }
 
-export interface DateRange {
-  startDate: string | null;
-  endDate: string | null;
-}
-
-export interface StatisticsFilter {
-  type: 'period' | 'dateRange' | 'all' | 'selectedDate';
-  value: number | DateRange | null | { selectedDate: string; records: LotteryRecord[] };
-}
