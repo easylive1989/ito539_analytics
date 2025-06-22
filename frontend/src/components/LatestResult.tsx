@@ -35,16 +35,6 @@ const LatestResult: React.FC<LatestResultProps> = ({ records, onDateChange }) =>
     }
   };
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('zh-TW', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      weekday: 'short'
-    });
-  };
-
   const formatDateForSelect = (dateStr: string) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString('zh-TW', {
