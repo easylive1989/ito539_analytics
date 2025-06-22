@@ -46,25 +46,21 @@ const LatestResult: React.FC<LatestResultProps> = ({ records }) => {
   return (
     <div className="latest-result">
       <h2>開獎結果</h2>
-      <div className="date-selector">
-        <label htmlFor="date-select">選擇開獎日期：</label>
-        <select 
-          id="date-select" 
-          value={selectedDate} 
-          onChange={handleDateChange}
-          className="date-select"
-        >
-          {records.map((record) => (
-            <option key={record.timestamp} value={record.timestamp}>
-              {formatDateForSelect(record.timestamp)}
-            </option>
-          ))}
-        </select>
-      </div>
       <div className="result-container">
         <div className="date-section">
-          <span className="date-label">開獎日期</span>
-          <span className="date-value">{selectedRecord ? formatDate(selectedRecord.timestamp) : ''}</span>
+          <label htmlFor="date-select" className="date-label">選擇開獎日期：</label>
+          <select 
+            id="date-select" 
+            value={selectedDate} 
+            onChange={handleDateChange}
+            className="date-select"
+          >
+            {records.map((record) => (
+              <option key={record.timestamp} value={record.timestamp}>
+                {formatDateForSelect(record.timestamp)}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="numbers-section">
           <span className="numbers-label">開獎號碼</span>
