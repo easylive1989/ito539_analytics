@@ -10,7 +10,7 @@ interface StatisticsProps {
 const Statistics: React.FC<StatisticsProps> = ({ records }) => {
   const { filteredRecords, statsTitle } = useMemo(() => {
     const filtered = records.slice(0, 30);
-    const title = '近30期號碼統計';
+    const title = '號碼統計';
     
     return { filteredRecords: filtered, statsTitle: title };
   }, [records]);
