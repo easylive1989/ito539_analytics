@@ -4,9 +4,10 @@ import './LatestResult.css';
 
 interface LatestResultProps {
   records: LotteryRecord[];
+  onDateChange?: (date: string) => void;
 }
 
-const LatestResult: React.FC<LatestResultProps> = ({ records }) => {
+const LatestResult: React.FC<LatestResultProps> = ({ records, onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedRecord, setSelectedRecord] = useState<LotteryRecord | null>(null);
 
@@ -14,14 +15,24 @@ const LatestResult: React.FC<LatestResultProps> = ({ records }) => {
     if (records.length > 0 && !selectedDate) {
       setSelectedDate(records[0].timestamp);
       setSelectedRecord(records[0]);
+      
+      // 通知父組件初始日期
+      if (onDateChange) {
+        onDateChange(records[0].date);
+      }
     }
-  }, [records, selectedDate]);
+  }, [records, selectedDate, onDateChange]);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const date = event.target.value;
     setSelectedDate(date);
     const record = records.find(r => r.timestamp === date);
     setSelectedRecord(record || null);
+    
+    // 通知父組件日期變更，使用 record.date 而不是 timestamp
+    if (record && onDateChange) {
+      onDateChange(record.date);
+    }
   };
 
   const formatDate = (dateStr: string) => {

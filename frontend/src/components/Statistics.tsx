@@ -5,15 +5,37 @@ import './Statistics.css';
 
 interface StatisticsProps {
   records: LotteryRecord[];
+  selectedDate?: string;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({ records }) => {
+const Statistics: React.FC<StatisticsProps> = ({ records, selectedDate }) => {
   const { filteredRecords, statsTitle } = useMemo(() => {
-    const filtered = records.slice(0, 30);
-    const title = '號碼統計';
+    let filtered: LotteryRecord[];
+    let title: string;
+    
+    if (selectedDate) {
+      // 找到選擇日期的索引位置
+      const selectedIndex = records.findIndex(record => record.date === selectedDate);
+      
+      if (selectedIndex !== -1) {
+        // 從選擇的日期開始往前取30期（包含選擇的日期）
+        const startIndex = selectedIndex;
+        const endIndex = Math.min(selectedIndex + 30, records.length);
+        filtered = records.slice(startIndex, endIndex);
+        title = `號碼統計 (${selectedDate} 往前30期)`;
+      } else {
+        // 如果找不到選擇的日期，使用前30期
+        filtered = records.slice(0, 30);
+        title = '號碼統計 (最近30期)';
+      }
+    } else {
+      // 沒有選擇日期時，使用前30期
+      filtered = records.slice(0, 30);
+      title = '號碼統計 (最近30期)';
+    }
     
     return { filteredRecords: filtered, statsTitle: title };
-  }, [records]);
+  }, [records, selectedDate]);
 
   const stats = useMemo(() => {
     const recentRecords = filteredRecords;
@@ -78,7 +100,7 @@ const Statistics: React.FC<StatisticsProps> = ({ records }) => {
             />
             <YAxis tick={{ fontSize: 12 }} />
             <Tooltip 
-              formatter={(value, name) => [value, '出現次數']}
+              formatter={(value) => [value, '出現次數']}
               labelFormatter={(label) => `號碼: ${label.toString().padStart(2, '0')}`}
             />
             <Bar dataKey="count" fill="#667eea" />

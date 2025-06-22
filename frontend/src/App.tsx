@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { useLotteryData } from './hooks/useLotteryData';
 import LatestResult from './components/LatestResult';
@@ -6,6 +6,7 @@ import Statistics from './components/Statistics';
 
 function App() {
   const { data, loading, error } = useLotteryData();
+  const [selectedDate, setSelectedDate] = useState<string>('');
 
   // Debug information
   console.log('App render:', { data: !!data, loading, error });
@@ -56,11 +57,13 @@ function App() {
       
       <main className="App-main">
         <LatestResult 
-          records={data.data} 
+          records={data.data}
+          onDateChange={setSelectedDate}
         />
         
         <Statistics 
-          records={data.data} 
+          records={data.data}
+          selectedDate={selectedDate}
         />
       </main>
       
