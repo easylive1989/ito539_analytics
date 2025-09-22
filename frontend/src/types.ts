@@ -16,3 +16,9 @@ export interface NumberStats {
   percentage: number;
 }
 
+export interface CombinationStats {
+  combination: [number, number];
+  count: number;
+  percentage: number;
+}
+

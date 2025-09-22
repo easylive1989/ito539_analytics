@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { useLotteryData } from './hooks/useLotteryData';
 import LatestResult from './components/LatestResult';
-import Statistics from './components/Statistics';
+import TabStatistics from './components/TabStatistics';
 
 function App() {
   const { data, loading, error } = useLotteryData();
@@ -61,7 +61,7 @@ function App() {
           onDateChange={setSelectedDate}
         />
         
-        <Statistics 
+        <TabStatistics
           records={data.data}
           selectedDate={selectedDate}
         />

@@ -1,0 +1,207 @@
+.combination-statistics {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.combination-statistics h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.combination-statistics h3 {
+  color: #34495e;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-item {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid rgba(118, 75, 162, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.summary-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(118, 75, 162, 0.4);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.summary-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #764ba2;
+}
+
+.chart-controls {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chart-controls label {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.chart-controls select {
+  padding: 0.5rem;
+  border: 2px solid #764ba2;
+  border-radius: 5px;
+  background: white;
+  color: #2c3e50;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.chart-controls select:focus {
+  outline: none;
+  border-color: #9b6cb7;
+  box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+}
+
+.chart-container {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(118, 75, 162, 0.2);
+}
+
+.stats-table {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(118, 75, 162, 0.2);
+}
+
+.stats-info {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  background: rgba(118, 75, 162, 0.1);
+  border-radius: 6px;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.table-container {
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.combination-statistics table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.combination-statistics th {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.combination-statistics td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.combination-statistics tr:hover td {
+  background-color: rgba(118, 75, 162, 0.05);
+}
+
+.combination-statistics .top-five {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%);
+}
+
+.combination-statistics .top-five:hover td {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 193, 7, 0.2) 100%);
+}
+
+.combination-cell {
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  color: #764ba2;
+  font-size: 1.1rem;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .combination-statistics {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .combination-statistics h2 {
+    font-size: 1.5rem;
+  }
+
+  .stats-summary {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .summary-item {
+    padding: 0.8rem;
+  }
+
+  .summary-value {
+    font-size: 1.2rem;
+  }
+
+  .chart-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .chart-container {
+    padding: 1rem;
+  }
+
+  .combination-statistics th,
+  .combination-statistics td {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .combination-cell {
+    font-size: 1rem;
+  }
+}

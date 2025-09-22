@@ -6,9 +6,10 @@ import './Statistics.css';
 interface StatisticsProps {
   records: LotteryRecord[];
   selectedDate?: string;
+  hideTitle?: boolean;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({ records, selectedDate }) => {
+const Statistics: React.FC<StatisticsProps> = ({ records, selectedDate, hideTitle = false }) => {
   const { filteredRecords, statsTitle } = useMemo(() => {
     let filtered: LotteryRecord[];
     let title: string;
@@ -71,7 +72,7 @@ const Statistics: React.FC<StatisticsProps> = ({ records, selectedDate }) => {
 
   return (
     <div className="statistics">
-      <h2>{statsTitle}</h2>
+      {!hideTitle && <h2>{statsTitle}</h2>}
       
       <div className="stats-summary">
         <div className="summary-item">

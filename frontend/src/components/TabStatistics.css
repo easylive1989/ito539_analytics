@@ -1,0 +1,157 @@
+.tab-statistics {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 15px;
+  padding: 0;
+  margin: 1rem 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tab-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem 2rem 1rem 2rem;
+}
+
+.tab-header h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tab-nav {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+
+.tab-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.tab-button.active {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #764ba2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tab-button.active:hover {
+  background: white;
+  color: #667eea;
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.tab-label {
+  font-weight: 600;
+}
+
+.tab-content {
+  padding: 0;
+  background: transparent;
+}
+
+.tab-panel {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 調整子組件樣式以適應 tab 容器 */
+.tab-panel .statistics,
+.tab-panel .combination-statistics {
+  background: transparent;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  padding: 2rem;
+}
+
+.tab-panel .statistics h2,
+.tab-panel .combination-statistics h2 {
+  display: none; /* 隱藏子組件的標題，因為我們在 tab-header 中已有統一標題 */
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .tab-header {
+    padding: 1rem 1rem 0.8rem 1rem;
+  }
+
+  .tab-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tab-nav {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tab-button {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    justify-content: center;
+  }
+
+  .tab-panel .statistics,
+  .tab-panel .combination-statistics {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-header {
+    padding: 0.8rem;
+  }
+
+  .tab-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .tab-button {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .tab-icon {
+    font-size: 1rem;
+  }
+}
