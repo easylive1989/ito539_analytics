@@ -15,9 +15,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 分離測試和建置步驟，確保測試失敗時不會進行建置
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install dependencies
+      run: |
+        cd frontend
+        npm ci
+
+    - name: Run tests
+      run: |
+        cd frontend
+        npm test -- --watchAll=false --passWithNoTests --coverage
+
+    - name: Upload test coverage
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-coverage
+        path: frontend/coverage/
+        retention-days: 7
+
   build:
     runs-on: ubuntu-latest
-    
+    needs: test  # 只有測試通過才執行建置
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -37,7 +71,7 @@ jobs:
     - name: Copy lottery data
       run: |
         cp lottery_data.json frontend/public/
-    
+
     - name: Build
       run: |
         cd frontend
@@ -56,7 +90,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [test, build]  # 需要測試和建置都成功
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
