@@ -1,4 +1,4 @@
-import { LotteryRecord } from '../../types';
+import { LotteryRecord } from '../types';
 
 /**
  * 測試用的開獎資料
