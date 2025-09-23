@@ -9,9 +9,6 @@ import {
 } from '../../utils/statisticsUtils';
 import {
   mockLotteryData,
-  expectedNumberStats,
-  expectedCombinationStats,
-  invalidLotteryData,
   emptyLotteryData,
   singleLotteryData
 } from '../../test-helpers/testData.mock';
