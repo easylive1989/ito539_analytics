@@ -36,9 +36,11 @@ class LTO539Scraper:
         """解析開獎資料"""
         soup = BeautifulSoup(html_content, 'html.parser')
         text_content = soup.get_text()
-        
-        # 直接搜尋日期和號碼模式，不依賴中文字符
-        pattern = r'(\d{4}/\d{2}/\d{2})\s*\r?\n\s*\r?\n\s*(\d{1,2},\s*\d{1,2},\s*\d{1,2},\s*\d{1,2},\s*\d{1,2})'
+
+        # 支援新舊兩種格式：
+        # 新格式：開獎日期:2025/10/15(三)
+        # 舊格式：2025/09/29
+        pattern = r'(?:開獎日期:)?(\d{4}/\d{2}/\d{2})(?:\([一二三四五六日]\))?\s*\r?\n\s*\r?\n\s*(\d{1,2},\s*\d{1,2},\s*\d{1,2},\s*\d{1,2},\s*\d{1,2})'
         matches = re.findall(pattern, text_content, re.DOTALL)
         
         lottery_data = []
