@@ -128,27 +128,84 @@ class LTO539Scraper:
         except Exception as e:
             print(f"Error saving data: {e}")
 
+    def send_discord_notification(self, latest_date: str, total_records: int, new_records: int = 0):
+        """發送 Discord 通知
+
+        Args:
+            latest_date: 最新資料的日期
+            total_records: 總資料筆數
+            new_records: 本次新增的資料筆數
+        """
+        # 從環境變數讀取 webhook URL
+        webhook_url = os.getenv('DISCORD_WEBHOOK_URL')
+
+        if not webhook_url:
+            print("Warning: DISCORD_WEBHOOK_URL environment variable not set. Skipping notification.")
+            return
+
+        # 建立通知訊息
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        message = {
+            "content": f"✅ **今彩539資料更新完成**\n\n"
+                      f"📅 最新開獎日期：`{latest_date}`\n"
+                      f"📊 總資料筆數：**{total_records}** 筆\n"
+                      f"🆕 本次新增：**{new_records}** 筆\n"
+                      f"🕐 更新時間：`{current_time}`",
+            "username": "今彩539資料監控"
+        }
+
+        try:
+            response = requests.post(
+                webhook_url,
+                json=message,
+                headers={'Content-Type': 'application/json'},
+                timeout=10
+            )
+            response.raise_for_status()
+            print(f"Discord notification sent successfully (Status: {response.status_code})")
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error sending Discord notification: {e}")
+
 def main():
     scraper = LTO539Scraper()
-    
+
     # 載入現有資料
     print("Loading existing data...")
     existing_data = scraper.load_existing_data()
     print(f"Found {len(existing_data)} existing records")
-    
+
     # 抓取最近的資料
     print("Scraping recent data...")
     new_data = scraper.scrape_recent_data(pages=3)
     print(f"Scraped {len(new_data)} records from recent pages")
-    
+
     # 合併並去重
     print("Merging and deduplicating...")
     merged_data = scraper.merge_and_deduplicate(existing_data, new_data)
-    
+
+    # 計算新增的資料筆數
+    new_records_count = len(merged_data) - len(existing_data)
+
     # 儲存更新後的資料
     scraper.save_to_json(merged_data)
-    
+
     print(f"Update complete. Total records: {len(merged_data)}")
+
+    # 取得最新資料日期
+    if merged_data:
+        latest_date = merged_data[0]['date']
+
+        # 發送 Discord 通知
+        print("\nSending Discord notification...")
+        scraper.send_discord_notification(
+            latest_date=latest_date,
+            total_records=len(merged_data),
+            new_records=new_records_count
+        )
+    else:
+        print("⚠️  No data available to send notification")
 
 if __name__ == "__main__":
     main()
