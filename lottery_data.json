@@ -1,7 +1,18 @@
 {
-  "last_updated": "2025-12-12T13:13:27.417465",
-  "total_records": 655,
+  "last_updated": "2025-12-13T13:09:15.857240",
+  "total_records": 656,
   "data": [
+    {
+      "date": "2025/12/13",
+      "numbers": [
+        2,
+        9,
+        21,
+        31,
+        38
+      ],
+      "timestamp": "2025-12-13T00:00:00"
+    },
     {
       "date": "2025/12/12",
       "numbers": [
