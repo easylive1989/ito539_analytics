@@ -1,7 +1,18 @@
 {
-  "last_updated": "2026-06-02T14:24:02.013360",
-  "total_records": 805,
+  "last_updated": "2026-06-03T14:30:46.871887",
+  "total_records": 806,
   "data": [
+    {
+      "date": "2026/06/03",
+      "numbers": [
+        2,
+        8,
+        17,
+        25,
+        38
+      ],
+      "timestamp": "2026-06-03T00:00:00"
+    },
     {
       "date": "2026/06/02",
       "numbers": [
